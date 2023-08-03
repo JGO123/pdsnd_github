@@ -9,7 +9,7 @@ This project analyses the bikeshare data from three major cities: _New York, Chi
 
 ### Files used include:
  - `bikeshare - Copy.py`
- - `.csv` files for the three cities: New York, Chicago, and Washington DC
+ - `.csv` files for the three cities: New York, Chicago, and Washington DC (not included in GIT repository due to the large size)
 
 ### Credits
 UDACITY GPT and website provided invaluable information to help mature my coding skills with this project 
