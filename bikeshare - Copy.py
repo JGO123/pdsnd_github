@@ -257,10 +257,10 @@ def trip_duration_stats(df):
     mean_travel_time = data_frame['Trip Duration'].mean()
     mean_travel_time_minutes = mean_travel_time / 60
 
-    print("Total travel time:", total_travel_time, "-- Total travel time in hours:", total_travel_time_hours)
-    print("Mean travel time:", mean_travel_time, "-- Mean travel time in minutes:", mean_travel_time_minutes)
-    print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*40)
+    print("Total travel time: {} -- Total travel time in hours: {}".format(total_travel_time, total_travel_time_hours))
+    print("Mean travel time: {} -- Mean travel time in minutes: {}".format(mean_travel_time, mean_travel_time_minutes))
+    print("\nThis took {} seconds.".format(time.time() - start_time))
+    print('-' * 40)
 
 def user_stats(df):
     """
