@@ -199,9 +199,9 @@ def station_stats(df):
         # display most frequent combination of start station and end station trip
         combine_start_end = df.groupby(['Start Station', 'End Station']).size().idxmax()
 
-        print('Popular Start Station:', popular_start)
-        print('Popular End Station:', popular_end)
-        print('Combination of Start Station and End Station:', combine_start_end)
+        print("Popular Start Station: {} ".format(popular_start))
+        print("Popular End Station: {} ".format(popular_end))
+        print("Combination of Start Station and End Station: {} ".format(combine_start_end))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -210,7 +210,6 @@ def station_stats(df):
 def trip_duration_stats(df):
     """
     Calculates and displays statistics on the total and average trip duration
-
     Args:
         Df: DataFrame from filtered Df
 
