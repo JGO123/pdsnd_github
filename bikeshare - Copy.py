@@ -243,38 +243,42 @@ def trip_duration_stats(df):
 def user_stats(df):
     """
     Calculates and displays statistics on the Bikeshare users like the type of subscriber, birthyear
-
     Args:
-        Df: DataFrame from filtered Df
-
+        df: DataFrame from filtered df
     Returns:
-        Datetime: birth year(end, most recent, and mean)
-        str: gender
-        str: subscriber
+        None
     """
     print('\nCalculating User Stats on the bikeshare users...\n')
     start_time = time.time()
-    if 'Birth Year' in df.columns:
-        if df.empty or df['Birth Year'].isnull().all():
-            print('No data available for the selected filters.')
-        else:
-            # Displays counts of user types
-            user_types = df['User Type'].value_counts()
-            # Displays counts of gender
-            gender_types = df['Gender'].value_counts()
-
-            # Displays earliest, most recent, and most common year of birth
-            sorted_bday = df['Birth Year'].dropna().sort_values()
-            earliest_bday = sorted_bday.iloc[0] if len(sorted_bday) > 0 else None
-            most_recent_bday = sorted_bday.iloc[-1] if len(sorted_bday) > 0 else None
-            most_common_bday = df['Birth Year'].mode()[0]
-            print(user_types, "\n")
-            print(gender_types, "\n")
-            print("Earliest Birthday in database: ", earliest_bday)
-            print("Most Recent Birthday in database: ", most_recent_bday)
-            print("Most Common Birthday: ", most_common_bday)
-    else:
+    
+    if 'Birth Year' not in df.columns:
         print('The column "Birth Year" does not exist in the dataframe.')
+        print("\nThis took %s seconds." % (time.time() - start_time))
+        print('-' * 40)
+        return
+    
+    if df.empty or df['Birth Year'].isnull().all():
+        print('No data available for the selected filters.')
+        print("\nThis took %s seconds." % (time.time() - start_time))
+        print('-' * 40)
+        return
+    
+    # Displays counts of user types
+    user_types = df['User Type'].value_counts()
+    # Displays counts of gender
+    gender_types = df['Gender'].value_counts()
+
+    # Displays earliest, most recent, and most common year of birth
+    sorted_bday = df['Birth Year'].dropna().sort_values()
+    earliest_bday = sorted_bday.iloc[0] if len(sorted_bday) > 0 else None
+    most_recent_bday = sorted_bday.iloc[-1] if len(sorted_bday) > 0 else None
+    most_common_bday = df['Birth Year'].mode()[0]
+    
+    print(user_types, "\n")
+    print(gender_types, "\n")
+    print("Earliest Birthday in database: ", earliest_bday)
+    print("Most Recent Birthday in database: ", most_recent_bday)
+    print("Most Common Birthday: ", most_common_bday)
     
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-' * 40)
