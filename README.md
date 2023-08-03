@@ -8,7 +8,7 @@
 This project analyses the bikeshare data from three major cities: _New York, Chicago, and Washington DC_. This includes customer analysis, popular stations, total and average trip times, 
 
 ### Files used include:
- - `bikeshare`
+ - `bikeshare - Copy.py`
  - `.csv` files for the three cities: New York, Chicago, and Washington DC
 
 ### Credits
