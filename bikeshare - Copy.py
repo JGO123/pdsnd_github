@@ -62,7 +62,7 @@ def load_data(city, month, day):
     Returns:
         DataFrame: loaded data based on the filters and raw data
     """
-    # load data file into a dataframe
+  
     df=pd.read_csv(CITY_DATA[city])
     
     # convert the Start Time column to datetime
@@ -72,26 +72,25 @@ def load_data(city, month, day):
     df['month'] = df['Start Time'].dt.month
     df['day'] = df['Start Time'].dt.weekday
     
-    # filter by month if applicable
+    # filter by month 
     if month != 'all':
-        # use the index of the months list to get the corresponding int
+        
         months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
         month = months.index(month) + 1
-        # filter by month to create the new dataframe
+       
         df = df[df['month'] == month]
-     # filter by day of week if applicable
+     # filter by day of week 
     if day != 'all':
         # filter by day of week to create the new dataframe
         df = df[df['day'] == day]
     
     #prompt user if wants to see raw data. If yes print 5 lines of raw data. Continue iterating and display#
-    #the next 5 lines until users says no
-    show_raw_data = True  # Flag variable to track if raw data should be displayed
+    show_raw_data = True  
     while True:
         if show_raw_data:
             raw = input("Do you want to see lines of raw data? (yes/no) ").lower()
         else:
-            raw = 'no'  # Skip asking for raw data if flag is False
+            raw = 'no'  
     
         if raw == 'yes':
             # Print the first 5 lines of raw data
@@ -108,7 +107,7 @@ def load_data(city, month, day):
                     for index, row in df.iloc[index+1:index+6].iterrows():
                         print(row)
                 elif continue_input == 'no':
-                    show_raw_data = False  # Set flag to False to skip asking for raw data
+                    show_raw_data = False  
                     break
                 else:
                     print("Invalid input. Please enter 'yes' or 'no'.")
@@ -135,7 +134,7 @@ def time_stats(df):
     if df.empty:
         print('No data available for the selected filters.')
     else:
-        # extract hour from the Start Time column to create an hour column
+       
         df['hour'] = df['Start Time'].dt.hour
 
         # find the most common hour, month, and day (from 0 to 23)
