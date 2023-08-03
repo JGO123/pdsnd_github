@@ -22,14 +22,12 @@ def get_filters():
     Returns:
         str: filters to be used to analyze
     """
-    #def filters(city)
     while True:
         city = input("What is the city that you want to analyze? ").lower()
         if city in CITY_DATA:
             break
         print("Try again - this database is only for Chicago, New York City, and Washington DC.")
      
-    #def filters(month)
     calendar_month = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
     month = None
     while True:
@@ -41,7 +39,6 @@ def get_filters():
         else:
             break
      
-    #def filters(day)    
     day_week = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     day = None
     while True:
@@ -235,6 +232,31 @@ def trip_duration_stats(df):
     mean_travel_time = df['Trip Duration'].mean()
     mean_travel_time_minutes = mean_travel_time/60
     
+   def trip_duration_stats(data_frame):
+    """
+    Calculates and displays statistics on the total and average trip duration
+
+    Args:
+        data_frame: DataFrame from filtered data
+
+    Returns:
+        travel_time_stats: travel time statistics for total travel and mean travel
+    """
+    print('\nCalculating Trip Duration...\n')
+    start_time = time.time()
+
+    # Handle missing or invalid data
+    data_frame['Trip Duration'].fillna(0, inplace=True)  # Replace missing values with 0
+    data_frame['Trip Duration'] = data_frame['Trip Duration'].astype(int)  # Convert to integer type
+
+    # Calculate total travel time
+    total_travel_time = data_frame['Trip Duration'].sum()
+    total_travel_time_hours = total_travel_time / 3600
+
+    # Calculate mean travel time
+    mean_travel_time = data_frame['Trip Duration'].mean()
+    mean_travel_time_minutes = mean_travel_time / 60
+
     print("Total travel time:", total_travel_time, "-- Total travel time in hours:", total_travel_time_hours)
     print("Mean travel time:", mean_travel_time, "-- Mean travel time in minutes:", mean_travel_time_minutes)
     print("\nThis took %s seconds." % (time.time() - start_time))
