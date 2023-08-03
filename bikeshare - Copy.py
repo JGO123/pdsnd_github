@@ -22,14 +22,12 @@ def get_filters():
     Returns:
         str: filters to be used to analyze
     """
-    #def filters(city)
     while True:
         city = input("What is the city that you want to analyze? ").lower()
         if city in CITY_DATA:
             break
         print("Try again - this database is only for Chicago, New York City, and Washington DC.")
      
-    #def filters(month)
     calendar_month = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
     month = None
     while True:
@@ -41,7 +39,6 @@ def get_filters():
         else:
             break
      
-    #def filters(day)    
     day_week = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     day = None
     while True:
@@ -65,7 +62,7 @@ def load_data(city, month, day):
     Returns:
         DataFrame: loaded data based on the filters and raw data
     """
-    # load data file into a dataframe
+  
     df=pd.read_csv(CITY_DATA[city])
     
     # convert the Start Time column to datetime
@@ -75,26 +72,25 @@ def load_data(city, month, day):
     df['month'] = df['Start Time'].dt.month
     df['day'] = df['Start Time'].dt.weekday
     
-    # filter by month if applicable
+    # filter by month 
     if month != 'all':
-        # use the index of the months list to get the corresponding int
+        
         months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
         month = months.index(month) + 1
-        # filter by month to create the new dataframe
+       
         df = df[df['month'] == month]
-     # filter by day of week if applicable
+     # filter by day of week 
     if day != 'all':
         # filter by day of week to create the new dataframe
         df = df[df['day'] == day]
     
     #prompt user if wants to see raw data. If yes print 5 lines of raw data. Continue iterating and display#
-    #the next 5 lines until users says no
-    show_raw_data = True  # Flag variable to track if raw data should be displayed
+    show_raw_data = True  
     while True:
         if show_raw_data:
             raw = input("Do you want to see lines of raw data? (yes/no) ").lower()
         else:
-            raw = 'no'  # Skip asking for raw data if flag is False
+            raw = 'no'  
     
         if raw == 'yes':
             # Print the first 5 lines of raw data
@@ -111,7 +107,7 @@ def load_data(city, month, day):
                     for index, row in df.iloc[index+1:index+6].iterrows():
                         print(row)
                 elif continue_input == 'no':
-                    show_raw_data = False  # Set flag to False to skip asking for raw data
+                    show_raw_data = False  
                     break
                 else:
                     print("Invalid input. Please enter 'yes' or 'no'.")
@@ -138,7 +134,7 @@ def time_stats(df):
     if df.empty:
         print('No data available for the selected filters.')
     else:
-        # extract hour from the Start Time column to create an hour column
+       
         df['hour'] = df['Start Time'].dt.hour
 
         # find the most common hour, month, and day (from 0 to 23)
@@ -202,9 +198,9 @@ def station_stats(df):
         # display most frequent combination of start station and end station trip
         combine_start_end = df.groupby(['Start Station', 'End Station']).size().idxmax()
 
-        print('Popular Start Station:', popular_start)
-        print('Popular End Station:', popular_end)
-        print('Combination of Start Station and End Station:', combine_start_end)
+        print("Popular Start Station: {} ".format(popular_start))
+        print("Popular End Station: {} ".format(popular_end))
+        print("Combination of Start Station and End Station: {} ".format(combine_start_end))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -213,7 +209,6 @@ def station_stats(df):
 def trip_duration_stats(df):
     """
     Calculates and displays statistics on the total and average trip duration
-
     Args:
         Df: DataFrame from filtered Df
 
@@ -235,10 +230,35 @@ def trip_duration_stats(df):
     mean_travel_time = df['Trip Duration'].mean()
     mean_travel_time_minutes = mean_travel_time/60
     
-    print("Total travel time:", total_travel_time, "-- Total travel time in hours:", total_travel_time_hours)
-    print("Mean travel time:", mean_travel_time, "-- Mean travel time in minutes:", mean_travel_time_minutes)
-    print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*40)
+   def trip_duration_stats(data_frame):
+    """
+    Calculates and displays statistics on the total and average trip duration
+
+    Args:
+        data_frame: DataFrame from filtered data
+
+    Returns:
+        travel_time_stats: travel time statistics for total travel and mean travel
+    """
+    print('\nCalculating Trip Duration...\n')
+    start_time = time.time()
+
+    # Handle missing or invalid data
+    data_frame['Trip Duration'].fillna(0, inplace=True)  # Replace missing values with 0
+    data_frame['Trip Duration'] = data_frame['Trip Duration'].astype(int)  # Convert to integer type
+
+    # Calculate total travel time
+    total_travel_time = data_frame['Trip Duration'].sum()
+    total_travel_time_hours = total_travel_time / 3600
+
+    # Calculate mean travel time
+    mean_travel_time = data_frame['Trip Duration'].mean()
+    mean_travel_time_minutes = mean_travel_time / 60
+
+    print("Total travel time: {} -- Total travel time in hours: {}".format(total_travel_time, total_travel_time_hours))
+    print("Mean travel time: {} -- Mean travel time in minutes: {}".format(mean_travel_time, mean_travel_time_minutes))
+    print("\nThis took {} seconds.".format(time.time() - start_time))
+    print('-' * 40)
 
 def user_stats(df):
     """
